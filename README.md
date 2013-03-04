@@ -18,3 +18,7 @@ Using [Package Control](http://wbond.net/sublime_packages/package_control):
 ![Preview] (https://github.com/lowliet/sublimetext-StatusBarTime/raw/master/preview.png)
 
 --------------
+
+## Settings
+
+Set the format of the time using the StatusBarTime__format setting. Defaults to '%H:%M:%S' 
