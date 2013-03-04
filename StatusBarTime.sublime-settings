@@ -1,3 +1,8 @@
 {
-    "StatusBarTime_format": "%H:%M"
+	// Specifies date / time format, where:
+	// %H - Hour (24-hour clock) as a decimal number [00, 23]
+	// %M - Minute as a decimal number [00, 59]
+	// %S - Second as a decimal number [00, 61]
+	// For more information, please refer to: http://docs.python.org/2/library/time.html#time.strftime
+    "StatusBarTime_format": "%H:%M:%S"
 }
