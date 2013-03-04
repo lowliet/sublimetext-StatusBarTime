@@ -19,9 +19,7 @@ Set the format of the time using the StatusBarTime__format setting. Defaults to 
 
 Example:
 
-{
     "StatusBarTime_format": "%a - %H:%M:%S" // Mon - 22:58:24
-}
 
 For more information refer to [documentation](http://docs.python.org/2/library/time.html#time.strftime)
 
