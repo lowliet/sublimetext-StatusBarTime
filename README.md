@@ -13,12 +13,22 @@ Using [Package Control](http://wbond.net/sublime_packages/package_control):
 
 --------------
 
+## Settings
+
+Set the format of the time using the StatusBarTime__format setting. Defaults to '%H:%M:%S'
+
+Example:
+
+{
+    "StatusBarTime_format": "%a - %H:%M:%S" // Mon - 22:58:24
+}
+
+For more information refer to [documentation](http://docs.python.org/2/library/time.html#time.strftime)
+
+--------------
+
 ## Preview
 
 ![Preview] (https://github.com/lowliet/sublimetext-StatusBarTime/raw/master/preview.png)
 
 --------------
-
-## Settings
-
-Set the format of the time using the StatusBarTime__format setting. Defaults to '%H:%M:%S' 
