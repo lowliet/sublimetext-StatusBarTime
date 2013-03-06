@@ -24,6 +24,7 @@ Set the display clock only when there is a file in view or display always like b
 Set the format of the time using the StatusBarTime__format setting. Defaults to '%H:%M:%S'
 
 Example:
+
     "StatusBarClock_type": 1    // Now it will display sublime text uptime
     
     "StatusBarClock_Interval": 5000 // Now clock will be updated every 5 sec
