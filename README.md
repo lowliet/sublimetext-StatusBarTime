@@ -1,8 +1,14 @@
 StatusBarTime
 =========================
 
-Small package that is displaying current time on status bar.
-Works with Sublime 3 (and 2).
+Small package for displaying current time (or uptime) on status bar.
+Works with Sublime 2 and 3.
+
+## Preview
+
+![Preview] (https://github.com/lowliet/sublimetext-StatusBarTime/raw/master/preview.png)
+
+--------------
 
 ## How to install
 
@@ -18,17 +24,18 @@ Using [Package Control](http://wbond.net/sublime_packages/package_control):
 
 Example config:
 
-    "StatusBarClock_type": 0,    	// Clock type as sublime text uptime: 0 - time, 1 - sublime uptime
-    "StatusBarClock_Interval": 1000, // Clock update interval (in millisecond)
-    "StatusBarClock_display_onlyinview": true,   // If true then clock will only be displayed when there is a file in view
-    "StatusBarTime_format": "%H:%M:%S" // Time format, for "%a - %H:%M:%S" -> Mon - 22:58:24
+	// Clock type as sublime text uptime: 0 - time, 1 - sublime uptime
+    "StatusBarClock_type": 0,
+
+    // Clock update interval (in millisecond)
+    "StatusBarClock_Interval": 1000,
+
+	// If true then clock will only be displayed when there is a file in view
+    "StatusBarClock_display_onlyinview": true,
+
+    // Time format, for "%a - %H:%M:%S" -> Mon - 22:58:24
+    "StatusBarTime_format": "%H:%M:%S"
 
 For more information refer to [Python documentation](http://docs.python.org/2/library/time.html#time.strftime)
-
---------------
-
-## Preview
-
-![Preview] (https://github.com/lowliet/sublimetext-StatusBarTime/raw/master/preview.png)
 
 --------------
