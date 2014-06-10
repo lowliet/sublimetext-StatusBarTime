@@ -31,7 +31,7 @@ class StatusBarTime(sublime_plugin.EventListener):
         else: Timer().displayUpTime(view, self.stBarStartTime, update_interval, onlyinview, lefty)
 
 class Timer():
-    status_key = "statusclock"
+    status_key = 'statusclock'
     def __init__(self, format=DEFAULT_FORMAT):
         self._format = format
 
