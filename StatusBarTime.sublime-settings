@@ -18,5 +18,5 @@
     "StatusBarClock_type": 0,
 
     // Stick the clock on the left side of the status bar
-    "StatusBarClock_lefty": true,
+    "StatusBarClock_lefty": true
 }
