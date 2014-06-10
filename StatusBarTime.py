@@ -23,7 +23,7 @@ class StatusBarTime(sublime_plugin.EventListener):
         clock_Type = settings.get(STATUSBARTIME_CLOCK_TYPE_KEY, 0)
         # Get setting for only in view display
         onlyinview = settings.get(STATUSBARTIME_CLOCKDISPLAY_ONLYINVIEW_KEY, True)
-        # Get setting for clock right display
+        # Get setting for lefty display
         lefty = settings.get(STATUSBARTIME_LEFTY_KEY, True)
         # Start Timer if its empty (This is supposed to happen only once)
         if not self.stBarStartTime: self.stBarStartTime=datetime.now()
