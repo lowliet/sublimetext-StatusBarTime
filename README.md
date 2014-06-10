@@ -36,6 +36,9 @@ Example config:
     // Time format, for "%a - %H:%M:%S" -> Mon - 22:58:24
     "StatusBarTime_format": "%H:%M:%S"
 
+    // Stick the clock on the left side of the status bar
+    "StatusBarClock_lefty": true,
+
 For more information refer to [Python documentation](http://docs.python.org/2/library/time.html#time.strftime)
 
 --------------
