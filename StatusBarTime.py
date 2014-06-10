@@ -50,7 +50,7 @@ class Timer():
         actwin = sublime.active_window()
         if actwin:
             if not onlyinview or (actwin.active_view() and actwin.active_view().id() == view.id()):
-               sublime.set_timeout(lambda: self.displayTime(view, delay, onlyinview), delay)
+               sublime.set_timeout(lambda: self.displayTime(view, delay, onlyinview, lefty), delay)
         else:
             view.set_status(self.status_key, '')
         return
