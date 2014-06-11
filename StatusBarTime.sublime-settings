@@ -1,19 +1,22 @@
 {
     // Clock update interval
     "StatusBarClock_Interval": 1000,
-    
+
     // Display only when there is a view (Making it false will turn clock always even when there is no file in view)
     "StatusBarClock_display_onlyinview": false,
-    
+
     // Specifies date / time format, where:
     // %H - Hour (24-hour clock) as a decimal number [00, 23]
     // %M - Minute as a decimal number [00, 59]
     // %S - Second as a decimal number [00, 61]
     // For more information, please refer to: http://docs.python.org/2/library/time.html#time.strftime
     "StatusBarTime_format": "%H:%M:%S",
-    
+
     // Specifies Clock type
     // 0 - System clock
     // 1 - Sublime Up time
-    "StatusBarClock_type": 0
+    "StatusBarClock_type": 0,
+
+    // Stick the clock on the left side of the status bar
+    "StatusBarClock_lefty": true
 }

@@ -10,6 +10,7 @@ STATUSBARTIME_CLOCK_TYPE_KEY = 'StatusBarClock_Type'
 STATUSBARTIME_SETTING_FILE = 'StatusBarTime.sublime-settings'
 STATUSBARTIME_CLOCKDELAY_KEY = 'StatusBarClock_Interval'
 STATUSBARTIME_CLOCKDISPLAY_ONLYINVIEW_KEY = "StatusBarClock_display_onlyinview"
+STATUSBARTIME_LEFTY_KEY = 'StatusBarClock_lefty'
 DEFAULT_FORMAT = '%H:%M:%S'
 
 class StatusBarTime(sublime_plugin.EventListener):
@@ -22,10 +23,12 @@ class StatusBarTime(sublime_plugin.EventListener):
         clock_Type = settings.get(STATUSBARTIME_CLOCK_TYPE_KEY, 0)
         # Get setting for only in view display
         onlyinview = settings.get(STATUSBARTIME_CLOCKDISPLAY_ONLYINVIEW_KEY, True)
+        # Get setting for lefty display
+        lefty = settings.get(STATUSBARTIME_LEFTY_KEY, True)
         # Start Timer if its empty (This is supposed to happen only once)
         if not self.stBarStartTime: self.stBarStartTime=datetime.now()
-        if not clock_Type: Timer(settings.get(STATUSBARTIME_FORMAT_KEY, DEFAULT_FORMAT)).displayTime(view, update_interval, onlyinview)
-        else: Timer().displayUpTime(view, self.stBarStartTime, update_interval, onlyinview)
+        if not clock_Type: Timer(settings.get(STATUSBARTIME_FORMAT_KEY, DEFAULT_FORMAT)).displayTime(view, update_interval, onlyinview, lefty)
+        else: Timer().displayUpTime(view, self.stBarStartTime, update_interval, onlyinview, lefty)
 
 class Timer():
     status_key = 'statusclock'
@@ -39,17 +42,19 @@ class Timer():
         minutes = (seconds % 3600)//60
         seconds = seconds % 60
         return days, hours, minutes, seconds
-    
-    def displayTime(self, view, delay, onlyinview):
+
+    def displayTime(self, view, delay, onlyinview, lefty):
+        if lefty:
+            self.status_key = "__statusclock"
         view.set_status(self.status_key, datetime.now().strftime(self._format))
         actwin = sublime.active_window()
         if actwin:
             if not onlyinview or (actwin.active_view() and actwin.active_view().id() == view.id()):
-               sublime.set_timeout(lambda: self.displayTime(view, delay, onlyinview), delay)
+               sublime.set_timeout(lambda: self.displayTime(view, delay, onlyinview, lefty), delay)
         else:
             view.set_status(self.status_key, '')
         return
-        
+
     # Method for handling uptime display
     def displayUpTime(self, view, startTime, delay, onlyinview):
         upTime = datetime.now() - startTime
@@ -67,4 +72,4 @@ class Timer():
         else:
             view.set_status(self.status_key, '')
         return
-        
+
