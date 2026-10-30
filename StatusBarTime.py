@@ -6,7 +6,7 @@ import sublime, sublime_plugin
 from datetime import datetime
 
 STATUSBARTIME_FORMAT_KEY = 'StatusBarTime_format'
-STATUSBARTIME_CLOCK_TYPE_KEY = 'StatusBarClock_Type'
+STATUSBARTIME_CLOCK_TYPE_KEY = 'StatusBarClock_type'
 STATUSBARTIME_SETTING_FILE = 'StatusBarTime.sublime-settings'
 STATUSBARTIME_CLOCKDELAY_KEY = 'StatusBarClock_Interval'
 STATUSBARTIME_CLOCKDISPLAY_ONLYINVIEW_KEY = "StatusBarClock_display_onlyinview"
@@ -56,7 +56,9 @@ class Timer():
         return
 
     # Method for handling uptime display
-    def displayUpTime(self, view, startTime, delay, onlyinview):
+    def displayUpTime(self, view, startTime, delay, onlyinview, lefty):
+        if lefty:
+            self.status_key = "__statusclock"
         upTime = datetime.now() - startTime
         days, hours, minutes, seconds = self.convert_timedelta(upTime)
         out = ''
@@ -68,7 +70,7 @@ class Timer():
         actwin = sublime.active_window()
         if actwin:
             if not onlyinview or (actwin.active_view() and actwin.active_view().id() == view.id()):
-               sublime.set_timeout(lambda: self.displayUpTime(view, startTime, delay, onlyinview), delay)
+               sublime.set_timeout(lambda: self.displayUpTime(view, startTime, delay, onlyinview, lefty), delay)
         else:
             view.set_status(self.status_key, '')
         return
