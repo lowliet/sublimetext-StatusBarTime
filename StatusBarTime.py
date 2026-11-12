@@ -15,6 +15,9 @@ DEFAULT_FORMAT = '%H:%M:%S'
 
 class StatusBarTime(sublime_plugin.EventListener):
     stBarStartTime = 0  # variable to hold start time
+    # view id -> token of the only chain that may keep running for that view
+    chains = {}
+
     def on_activated(self, view):
         settings = sublime.load_settings(STATUSBARTIME_SETTING_FILE)
         # Get Update interval for clock
@@ -27,8 +30,14 @@ class StatusBarTime(sublime_plugin.EventListener):
         lefty = settings.get(STATUSBARTIME_LEFTY_KEY, True)
         # Start Timer if its empty (This is supposed to happen only once)
         if not self.stBarStartTime: self.stBarStartTime=datetime.now()
-        if not clock_Type: Timer(settings.get(STATUSBARTIME_FORMAT_KEY, DEFAULT_FORMAT)).displayTime(view, update_interval, onlyinview, lefty)
-        else: Timer().displayUpTime(view, self.stBarStartTime, update_interval, onlyinview, lefty)
+        # A new activation replaces the chain this view already had, so the chains cannot pile up.
+        token = self.chains.get(view.id(), 0) + 1
+        self.chains[view.id()] = token
+        if not clock_Type: Timer(settings.get(STATUSBARTIME_FORMAT_KEY, DEFAULT_FORMAT)).displayTime(view, update_interval, onlyinview, lefty, token)
+        else: Timer().displayUpTime(view, self.stBarStartTime, update_interval, onlyinview, lefty, token)
+
+    def on_close(self, view):
+        self.chains.pop(view.id(), None)
 
 class Timer():
     status_key = 'statusclock'
@@ -43,20 +52,27 @@ class Timer():
         seconds = seconds % 60
         return days, hours, minutes, seconds
 
-    def displayTime(self, view, delay, onlyinview, lefty):
+    # True while this chain is still the current one for the view.
+    def is_current(self, view, token):
+        if token is None: return True
+        return StatusBarTime.chains.get(view.id()) == token
+
+    def displayTime(self, view, delay, onlyinview, lefty, token=None):
+        if not self.is_current(view, token): return
         if lefty:
             self.status_key = "__statusclock"
         view.set_status(self.status_key, datetime.now().strftime(self._format))
         actwin = sublime.active_window()
         if actwin:
             if not onlyinview or (actwin.active_view() and actwin.active_view().id() == view.id()):
-               sublime.set_timeout(lambda: self.displayTime(view, delay, onlyinview, lefty), delay)
+               sublime.set_timeout(lambda: self.displayTime(view, delay, onlyinview, lefty, token), delay)
         else:
             view.set_status(self.status_key, '')
         return
 
     # Method for handling uptime display
-    def displayUpTime(self, view, startTime, delay, onlyinview, lefty):
+    def displayUpTime(self, view, startTime, delay, onlyinview, lefty, token=None):
+        if not self.is_current(view, token): return
         if lefty:
             self.status_key = "__statusclock"
         upTime = datetime.now() - startTime
@@ -70,8 +86,7 @@ class Timer():
         actwin = sublime.active_window()
         if actwin:
             if not onlyinview or (actwin.active_view() and actwin.active_view().id() == view.id()):
-               sublime.set_timeout(lambda: self.displayUpTime(view, startTime, delay, onlyinview, lefty), delay)
+               sublime.set_timeout(lambda: self.displayUpTime(view, startTime, delay, onlyinview, lefty, token), delay)
         else:
             view.set_status(self.status_key, '')
         return
-
